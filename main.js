@@ -1,36 +1,20 @@
-const { app, BrowserWindow } = require("electron");
-const axios = require("axios");
-
-async function makePostRequest(test) {
-  axios
-    .get("http://127.0.0.1:5000/test")
-    .then(function (response) {
-      console.log("It says: ", response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-  });
-
-  win.loadFile("index.html");
-
-  makePostRequest();
-};
+// In the main process.
+const { app, BrowserView, BrowserWindow } = require("electron");
 
 app.whenReady().then(() => {
-  createWindow();
+  const win = new BrowserWindow({ width: 800, height: 600 });
 
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  const view = new BrowserView();
+  win.setBrowserView(view);
+  view.setBounds({ x: 0, y: 0, width: 800, height: 800 });
+  view.setAutoResize({
+    horizontal: true,
+    vertical: true,
+    width: true,
+    height: true,
   });
+  view.webContents.loadURL("http://127.0.0.1:3000");
 
-  app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") app.quit();
-  });
+  win.maximize();
+  win.show();
 });
