@@ -8,5 +8,8 @@
   },
   "scripts": {
     "start": "electron ."
+  },
+  "dependencies": {
+    "axios": "^0.26.0"
   }
 }

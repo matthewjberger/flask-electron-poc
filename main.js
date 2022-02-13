@@ -1,4 +1,16 @@
 const { app, BrowserWindow } = require("electron");
+const axios = require("axios");
+
+async function makePostRequest(test) {
+  axios
+    .get("http://127.0.0.1:5000/test")
+    .then(function (response) {
+      console.log("It says: ", response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -7,6 +19,8 @@ const createWindow = () => {
   });
 
   win.loadFile("index.html");
+
+  makePostRequest();
 };
 
 app.whenReady().then(() => {
