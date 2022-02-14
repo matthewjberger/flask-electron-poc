@@ -1,4 +1,3 @@
-// In the main process.
 const { app, BrowserView, BrowserWindow } = require("electron");
 
 app.whenReady().then(() => {
